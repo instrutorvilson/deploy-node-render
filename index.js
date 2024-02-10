@@ -7,6 +7,7 @@ const contatos = require('./contatos')
 const locais = require('./locais')
 const compromissos = require('./compromissos')
 const categorias = require('./categorias')
+const usuarios = require('./usuarios')
 
 app.use(express.json())
 
@@ -14,7 +15,7 @@ app.use('/contatos', contatos)
 app.use('/locais', locais)
 app.use('/compromissos', compromissos)
 app.use('/categorias', categorias)
-
+app.use('/usuarios', usuarios)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
