@@ -8,8 +8,8 @@ module.exports = async (req, res, next) => {
   }
 
   let dados = await jwt.verify(token, 'aula-node')
-  if (dados.perfil != "ADMIN") {
-    res.status(403).send('Precisa ter perfil ADMIN')
+  if (dados.perfil != "OPERADOR") {
+    res.status(403).send('Precisa ter perfil OPERADOR')
     return
   }
 

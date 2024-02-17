@@ -2,6 +2,7 @@ const express = require('express')
 router = express.Router()
 const pg = require('pg')
 const userADM = require('./middlewares/middleWareADMIN')
+const userOPERADOR = require('./middlewares/middleWareOPERADOR')
 
 const stringConexao = process.env.DATABASE_URL || 'postgres://postgres:admin@localhost/bd_node'
 const pool = new pg.Pool({ connectionString: stringConexao })
@@ -17,7 +18,7 @@ router.get("/conectar", (req, res) => {
     })
 })
 
-router.get("/", (req, res) => {
+router.get("/", userOPERADOR, (req, res) => {
     pool.connect((err, client) => {
         if (err) {
             res.status(400).send({ message: err.message })
