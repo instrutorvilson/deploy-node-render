@@ -3,6 +3,7 @@ router = express.Router()
 const pg = require('pg')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const validaLogin = require('./middlewares/middleWareLogin')
 
 const stringConexao = process.env.DATABASE_URL || 'postgres://postgres:admin@localhost/bd_node'
 const pool = new pg.Pool({ connectionString: stringConexao })
@@ -28,7 +29,7 @@ router.post('/register', async (req, res) => {
     }
 })
 
-router.post('/login', async (req, res) => {
+router.post('/login', validaLogin, async (req, res) => {
     try {
         let client = await pool.connect()
         let dados = await client.query('select * from tb_usuarios where email = $1', [req.body.email])
@@ -51,8 +52,6 @@ router.post('/login', async (req, res) => {
         else {
             throw new Error('Usuario não cadastrado')
         }
-
-
     } catch (error) {
         res.status(400).send(`Erro:${error.message}`)
     }
