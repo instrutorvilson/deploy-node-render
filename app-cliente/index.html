@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="inserirCategoria()">Inserir categoria</button>
+    <button onclick="consultarCategorias()">Consulta categoria</button>
+
+    <script>
+        function inserirCategoria(){
+            let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibm9tZSI6Im1hcmlhIiwiZW1haWwiOiJtYXJpYUBnbWFpbC5jb20iLCJwZXJmaWwiOiJBRE1JTiIsImlhdCI6MTcwODE4MjIzN30.MptXggH0cPDxoEa07S0rXLmd1L7hy74q638FyrA5EoQ'
+            fetch('http://localhost:8080/categorias',
+            {
+                method: 'POST',
+                headers: {'x-access-token': token, 'Content-Type': 'application/json'},
+                body:JSON.stringify({descricao:'teste'})
+            }
+            )
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.log(error))
+        }
+
+        function consultarCategorias(){
+           let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Niwibm9tZSI6InBlZHJvIiwiZW1haWwiOiJwZWRyb0BnbWFpbC5jb20iLCJwZXJmaWwiOiJPUEVSQURPUiIsImlhdCI6MTcwODE4Mjk0MX0.KsJEXpI_D-P65hJ_dC1YARwJkQeo9ZjMMprQjP8whuM'
+           
+            fetch('http://localhost:8080/categorias',
+            {
+                headers:{'x-access-token': token}
+            }
+            )
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.log(error))
+        }
+    </script>
+</body>
+</html>
