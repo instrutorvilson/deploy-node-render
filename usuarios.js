@@ -4,12 +4,12 @@ const pg = require('pg')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const validaLogin = require('./middlewares/middleWareLogin')
+const validaRegister = require('./middlewares/middleWareRegister')
 
 const stringConexao = process.env.DATABASE_URL || 'postgres://postgres:admin@localhost/bd_node'
 const pool = new pg.Pool({ connectionString: stringConexao })
 
-
-router.post('/register', async (req, res) => {
+router.post('/register', validaRegister, async (req, res) => {
     try {
         let client = await pool.connect()
         let dados = await client.query('select * from tb_usuarios where email = $1', [req.body.email])

@@ -1,6 +1,7 @@
 const express = require('express')
 router = express.Router()
 const pg = require('pg')
+const userADM = require('./middlewares/middleWareADMIN')
 
 const stringConexao = process.env.DATABASE_URL || 'postgres://postgres:admin@localhost/bd_node'
 const pool = new pg.Pool({ connectionString: stringConexao })
@@ -51,7 +52,7 @@ router.get("/:idcategoria", async (req, res) => {
     }
 })
 
-router.post("/", async (req, res) => {
+router.post("/", userADM, async (req, res) => {
     try {
         var client = await pool.connect()
         var dados = await client.query('insert into tb_categorias(descricao)values($1) RETURNING *', [req.body.descricao])
